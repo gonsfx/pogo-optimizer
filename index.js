@@ -78,6 +78,16 @@ new PokemonGoMITM({port: 8081})
       inventory.save();
       releasing = null;
     }
+  })
+
+  // throw excellent curveballs only
+  .addRequestHandler("CatchPokemon", function (data) {
+    data.normalized_reticle_size = 1.950;
+    data.spin_modifier = 0.850;
+    if (data.hit_pokemon) {
+      data.normalized_hit_position = 1.0;
+    }
+    return data;
   });
 
 /**
