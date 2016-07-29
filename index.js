@@ -88,6 +88,26 @@ new PokemonGoMITM({port: 8081})
       data.normalized_hit_position = 1.0;
     }
     return data;
+  })
+
+  // replace all pokemon nicknames with their IVs
+  .addRequestHandler("GetInventory", function (data) {
+    data.last_timestamp_ms = 0;
+    return data;
+  })
+  .addResponseHandler("GetInventory", function (data) {
+    if (data.inventory_delta) {
+      var ref = data.inventory_delta.inventory_items;
+      for (var i = 0, len = ref.length; i < len; i++) {
+        var pokemon = ref[i].inventory_item_data.pokemon_data;
+        if (pokemon) {
+          iv = ((pokemon.individual_attack || 0) + (pokemon.individual_defense || 0) + (pokemon.individual_stamina || 0)) / 45.0 * 100;
+          iv = Math.floor(iv * 10) / 10;
+          pokemon.nickname = "IV: " + iv + "%";
+        }
+      }
+    }
+    return data;
   });
 
 /**
