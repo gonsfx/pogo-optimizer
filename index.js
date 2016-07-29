@@ -104,7 +104,7 @@ new PokemonGoMITM({port: 8081})
           iv = ((pokemon.individual_attack || 0) + (pokemon.individual_defense || 0) + (pokemon.individual_stamina || 0)) / 45.0 * 100;
           iv = Math.floor(iv * 10) / 10;
           var shortened = pokemon.pokemon_id.substr(0, 8);
-          var ucfirst = shortened.charAt(0).toUpperCase() + shortened.slice(1);
+          var ucfirst = shortened.charAt(0).toUpperCase() + shortened.slice(1).toLowerCase();
 
           pokemon.nickname = ucfirst + ' ' + Math.round(iv)
         }
