@@ -98,7 +98,7 @@ new PokemonGoMITM({port: 8081})
   .addResponseHandler("GetInventory", function (data) {
     if (data.inventory_delta) {
       var ref = data.inventory_delta.inventory_items;
-      for (var i = 0, var len = ref.length; i < len; i++) {
+      for (var i = 0, len = ref.length; i < len; i++) {
         var pokemon = ref[i].inventory_item_data.pokemon_data;
         if (pokemon) {
           iv = ((pokemon.individual_attack || 0) + (pokemon.individual_defense || 0) + (pokemon.individual_stamina || 0)) / 45.0 * 100;
