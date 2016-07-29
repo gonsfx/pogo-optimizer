@@ -101,15 +101,12 @@ new PokemonGoMITM({port: 8081})
       for (var i = 0, len = ref.length; i < len; i++) {
         var pokemon = ref[i].inventory_item_data.pokemon_data;
         if (pokemon && !pokemon.is_egg) {
-          if (!pokemon.pokemon_id) {
-            console.log(pokemon)
-          }
           iv = ((pokemon.individual_attack || 0) + (pokemon.individual_defense || 0) + (pokemon.individual_stamina || 0)) / 45.0 * 100;
           iv = Math.floor(iv * 10) / 10;
-          // var shortened = pokemon.pokemon_id.substr(0, 8);
-          // var ucfirst = shortened.charAt(0).toUpperCase() + shortened.slice(1);
+          var shortened = pokemon.pokemon_id.substr(0, 8);
+          var ucfirst = shortened.charAt(0).toUpperCase() + shortened.slice(1);
 
-          pokemon.nickname = Math.round(iv)
+          pokemon.nickname = ucfirst + ' ' + Math.round(iv)
         }
       }
     }
